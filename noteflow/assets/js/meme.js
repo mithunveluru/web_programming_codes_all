@@ -24,3 +24,4 @@ document.addEventListener("DOMContentLoaded", function () {
 
     memeImg.addEventListener("click", changeMeme);
 });
+
