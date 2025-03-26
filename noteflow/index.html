@@ -190,30 +190,40 @@ ReactDOM.createRoot(document.getElementById("tasklist-root")).render(<TaskList /
         </header>
 
         <!-- Section 1: Cards -->
-        <section class="grid">
-            <h2>📌 Quick Access
-                <div id="tasklist-root"></div>
-            </h2>
-            
-            <div class="card-container">
-                <div class="card">
-                    <img src="images/notes.png" alt="Notes">
-                    <h3>Notes</h3>
-                </div>
-                <div class="card">
-                    <img src="images/mindmap.png" alt="Mind Map">
-                    <h3>Mind Map</h3>
-                </div>
-                <div class="card">
-                    <img src="images/anki.jpg" alt="Flashcards">
-                    <h3>Flashcards</h3>
-                </div>
-                <div class="card">
-                    <img src="images/settings.png" alt="Settings">
-                    <h3>Settings</h3>
-                </div>
+        <!-- Section 1: Cards -->
+<section class="grid">
+    <h2>📌 Quick Access
+        <div id="tasklist-root"></div>
+    </h2>
+    
+    <div class="card-container">
+        <a href="notes.html" class="card-link">
+            <div class="card">
+                <img src="images/notes.png" alt="Notes">
+                <h3>Notes</h3>
             </div>
-            <div id="clock-root"></div>
+        </a>
+        <a href="mindmap.html" class="card-link">
+            <div class="card">
+                <img src="images/mindmap.png" alt="Mind Map">
+                <h3>Mind Map</h3>
+            </div>
+        </a>
+        <a href="flashcards.html" class="card-link">
+            <div class="card">
+                <img src="images/anki.jpg" alt="Flashcards">
+                <h3>Flashcards</h3>
+            </div>
+        </a>
+        <a href="settings.html" class="card-link">
+            <div class="card">
+                <img src="images/settings.png" alt="Settings">
+                <h3>Settings</h3>
+            </div>
+        </a>
+    </div>
+    <div id="clock-root"></div>
+</section>
 
             
         </section>

@@ -20,8 +20,21 @@ const flashcards = [
     { question: "What is CORS?", answer: "A security feature that controls cross-origin requests" },
     { question: "What is the difference between GET and POST requests?", answer: "GET retrieves data, POST sends data to the server" },
     { question: "What is AJAX?", answer: "A technique for making asynchronous HTTP requests" },
-    { question: "What is a web socket?", answer: "A protocol for real-time communication over the web" }
+    { question: "What is a web socket?", answer: "A protocol for real-time communication over the web" },
+
+    // Arabic vocabulary flashcards
+    { question: "كتاب (Kitab)", answer: "Book" },
+    { question: "قلم (Qalam)", answer: "Pen" },
+    { question: "ماء (Ma'a)", answer: "Water" },
+    { question: "جمل (Jamal)", answer: "Camel" },
+    { question: "شمس (Shams)", answer: "Sun" },
+    { question: "قلب (Qalb)", answer: "Heart" },
+    { question: "بيت (Bayt)", answer: "House" },
+    { question: "مدينة (Madinah)", answer: "City" },
+    { question: "تفاح (Tuffah)", answer: "Apple" },
+    { question: "سيارة (Sayyarah)", answer: "Car" }
 ];
+
 
 
 let currentIndex = 0;
