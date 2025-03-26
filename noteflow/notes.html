@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notes - NoteFlow</title>
+    <link rel="stylesheet" href="assets/css/notes.css">
+</head>
+<body>
+    <header>
+        <h1>My Notes</h1>
+        <div class="header-actions">
+            <button id="toggle-theme">🌙</button>
+            <a href="index.html" class="back-link">Back to Dashboard</a>
+        </div>
+    </header>
+
+    <section id="notes-container">
+        <textarea id="note-input" placeholder="Write your note here..."></textarea>
+        <div class="buttons">
+            <button id="save-note">Save Note</button>
+            <button id="summarize-note">Summarize with AI</button>
+            <button id="clear-note">Clear Note</button> <!-- FIXED: Added Clear Note button -->
+        </div>
+        <div id="saved-notes"></div>
+    </section>
+
+    <script src="assets/js/notes.js"></script>
+</body>
+</html>

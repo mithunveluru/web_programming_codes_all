@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mind Map - NoteFlow</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/mindmap.css">
+</head>
+<body>
+
+    <header>
+        <h1>Mind Map</h1>
+        <div class="header-actions">
+            <button id="toggle-theme">🌙</button>
+            <a href="index.html" class="btn">Back to Dashboard</a>
+        </div>
+    </header>
+
+    <section id="mindmap-container">
+        <svg id="edges"></svg>  <!-- SVG to hold edges -->
+        <div id="mindmap"></div>
+        <div class="controls">
+            <button id="add-node">➕ Add Node</button>
+            <button id="connect-nodes">🔗 Connect Nodes</button>
+            <button id="clear-map">🗑 Clear Map</button>
+        </div>
+    </section>
+
+    <script src="assets/js/mindmap.js"></script>
+</body>
+</html>

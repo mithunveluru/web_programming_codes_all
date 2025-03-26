@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NoteFlow - Dashboard</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/dark-mode.css">
+    <link rel="stylesheet" href="assets/css/animations.css">
+    <script defer src="assets/js/theme.js"></script>
+    <script defer src="assets/js/sidebar.js"></script>
+    <script defer src="assets/js/meme.js"></script>
+    <script defer src="assets/js/quotes.js"></script>
+</head>
+<body>
+
+    <div class="sidebar">
+        <h2>📌 NoteFlow</h2>
+        <ul>
+            <li><a href="notes.html">📝 Notes</a></li>
+            <li><a href="mindmap.html">🧠 Mind Map</a></li>
+            <li><a href="flashcards.html">🎴 Flashcards</a></li>
+            <li><a href="settings.html">⚙️ Settings</a></li>
+        </ul>
+    </div>
+
+
+<!-- Add React and ReactDOM -->
+<script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+
+<script type="text/babel">
+  const { useState, useEffect } = React;
+
+  const DigitalClock = () => {
+    const [time, setTime] = useState(new Date());
+    const [isDarkMode, setIsDarkMode] = useState(document.body.classList.contains("dark-mode"));
+
+    useEffect(() => {
+      const timer = setInterval(() => setTime(new Date()), 1000);
+      
+      const observer = new MutationObserver(() => {
+        setIsDarkMode(document.body.classList.contains("dark-mode"));
+      });
+
+      observer.observe(document.body, { attributes: true, attributeFilter: ["class"] });
+
+      return () => {
+        clearInterval(timer);
+        observer.disconnect();
+      };
+    }, []);
+
+    const formatTime = (date) => date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
+
+    const formatDate = (date) => date.toLocaleDateString([], { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+
+    const containerStyle = {
+      padding: '10px',
+      backgroundColor: isDarkMode ? '#2a2a2a' : '#f8f9fa',
+      color: isDarkMode ? '#ffffff' : '#000000',
+      textAlign: 'center',
+      borderRadius: '8px',
+      fontSize: '20px',
+      boxShadow: '0px 4px 10px rgba(0,0,0,0.1)'
+    };
+
+    return (
+      <div className="digital-clock-container" style={containerStyle}>
+        <div style={{ fontSize: '30px', fontWeight: 'bold' }}>{formatTime(time)}</div>
+        <div>{formatDate(time)}</div>
+      </div>
+    );
+  };
+
+  ReactDOM.createRoot(document.getElementById('clock-root')).render(<DigitalClock />);
+
+
+  const TaskList = () => {
+  const [tasks, setTasks] = React.useState(() => JSON.parse(localStorage.getItem("tasks")) || []);
+  const [newTask, setNewTask] = React.useState("");
+  const [isDarkMode, setIsDarkMode] = React.useState(document.body.classList.contains("dark-mode"));
+
+  React.useEffect(() => {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  }, [tasks]);
+
+  React.useEffect(() => {
+    const observer = new MutationObserver(() => {
+      setIsDarkMode(document.body.classList.contains("dark-mode"));
+    });
+    observer.observe(document.body, { attributes: true, attributeFilter: ["class"] });
+    return () => observer.disconnect();
+  }, []);
+
+  const addTask = () => {
+    if (!newTask.trim()) return;
+    setTasks([...tasks, { id: Date.now(), text: newTask, completed: false }]);
+    setNewTask("");
+  };
+
+  const toggleTask = (id) => {
+    setTasks(tasks.map(task => task.id === id ? { ...task, completed: !task.completed } : task));
+  };
+
+  const removeTask = (id) => {
+    setTasks(tasks.filter(task => task.id !== id));
+  };
+
+  return (
+    <div className="task-list-container" style={{
+      padding: "15px",
+      backgroundColor: isDarkMode ? "#2a2a2a" : "#f8f9fa",
+      color: isDarkMode ? "#ffffff" : "#000000",
+      borderRadius: "8px",
+      boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+      textAlign: "center",
+      marginTop: "10px"
+    }}>
+      <h2>📝 Task List</h2>
+      <div style={{ display: "flex", justifyContent: "center", gap: "5px", marginBottom: "10px" }}>
+        <input
+          type="text"
+          value={newTask}
+          onChange={(e) => setNewTask(e.target.value)}
+          placeholder="Add a new task..."
+          style={{
+            padding: "8px",
+            width: "70%",
+            border: "1px solid #ccc",
+            borderRadius: "4px",
+            backgroundColor: isDarkMode ? "#3a3a3a" : "#ffffff",
+            color: isDarkMode ? "#ffffff" : "#000000"
+          }}
+        />
+        <button onClick={addTask} style={{
+          padding: "8px",
+          backgroundColor: "#28a745",
+          color: "white",
+          border: "none",
+          borderRadius: "4px",
+          cursor: "pointer"
+        }}>➕</button>
+      </div>
+      <ul style={{ listStyle: "none", padding: 0, marginTop: "10px" }}>
+        {tasks.map((task) => (
+          <li key={task.id} style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            padding: "8px",
+            backgroundColor: isDarkMode ? "#3a3a3a" : "#fff",
+            borderBottom: "1px solid #ddd"
+          }}>
+            <input 
+              type="checkbox" 
+              checked={task.completed} 
+              onChange={() => toggleTask(task.id)}
+            />
+            <span style={{ textDecoration: task.completed ? "line-through" : "none" }}>
+              {task.text}
+            </span>
+            <button onClick={() => removeTask(task.id)} style={{
+              background: "none",
+              border: "none",
+              cursor: "pointer",
+              fontSize: "16px",
+              color: "red"
+            }}>❌</button>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+
+ReactDOM.createRoot(document.getElementById("tasklist-root")).render(<TaskList />);
+
+
+</script>
+
+
+
+    <div class="main-content">
+        <header>
+            <h1>Dashboard</h1>
+            <button id="theme-toggle">🌙 Toggle Theme</button>
+        </header>
+
+        <!-- Section 1: Cards -->
+        <section class="grid">
+            <h2>📌 Quick Access
+                <div id="tasklist-root"></div>
+            </h2>
+            
+            <div class="card-container">
+                <div class="card">
+                    <img src="images/notes.png" alt="Notes">
+                    <h3>Notes</h3>
+                </div>
+                <div class="card">
+                    <img src="images/mindmap.png" alt="Mind Map">
+                    <h3>Mind Map</h3>
+                </div>
+                <div class="card">
+                    <img src="images/anki.jpg" alt="Flashcards">
+                    <h3>Flashcards</h3>
+                </div>
+                <div class="card">
+                    <img src="images/settings.png" alt="Settings">
+                    <h3>Settings</h3>
+                </div>
+            </div>
+            <div id="clock-root"></div>
+
+            
+        </section>
+        
+        
+
+        <!-- Section 2: Inspirational Quotes -->
+        <section class="quote-section">
+            <h2>🌟 Daily Inspiration</h2>
+            <blockquote id="quote-text">"Loading inspirational quote..."</blockquote>
+            <p id="quote-author">- Author</p>
+            <button id="new-quote">🔄 New Quote</button>
+        </section>
+
+        <!-- Section 3: Meme Generator -->
+        <section class="meme-section">
+            <h2>😂 Random Meme Generator</h2>
+            <img id="meme-image" src="images/1ms577a24vqe1.jpeg" alt="Funny Meme">
+            <p id="meme-text">Click the meme to change it! 🤣</p>
+        </section>
+    </div>
+    
+
+</body>
+</html>

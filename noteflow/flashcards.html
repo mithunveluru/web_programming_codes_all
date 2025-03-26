@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flashcards - NoteFlow</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/flashcards.css">
+    <script defer src="assets/js/theme.js"></script>
+    <script defer src="assets/js/flashcards.js"></script>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="back-btn">← Dashboard</a>
+        <h1>Flashcards</h1>
+    <button id="theme-toggle">🌙 Dark Mode</button>
+    </header>
+
+    <section id="flashcards-container">
+        <div class="timers">
+            <span class="timer">⏳ Time on Card: <span id="timer">0s</span></span>
+            <span class="session-timer">⏱️ Total Time: <span id="total-timer">0s</span></span>
+        </div>
+        
+        <div class="progress">📊 Progress: <span id="progress">0 / 0</span></div>
+
+        <div class="flashcard">
+            <div class="card-content">
+                <p class="question">Click to reveal the answer</p>
+                <p class="answer hidden">Answer will appear here</p>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button id="prev-card">⬅️ Previous</button>
+            <button id="flip-card">🔄 Flip</button>
+            <button id="next-card">➡️ Next</button>
+        </div>
+    </section>
+    <script defer src="assets/js/theme.js"></script>
+
+
+</body>
+</html>

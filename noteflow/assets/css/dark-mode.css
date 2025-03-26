@@ -1,0 +1,73 @@
+body.dark-mode {
+    background: #1e1e1e;
+    color: #fff;
+    transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+/* Sidebar */
+.dark-mode .sidebar {
+    background: #2a2a2a;
+    color: #fff;
+}
+.dark-mode .sidebar ul li a {
+    color: #fff;
+}
+.dark-mode .sidebar ul li a:hover {
+    color: #007aff;
+}
+
+/* Cards */
+.dark-mode .card {
+    background: #333;
+    color: #fff;
+    box-shadow: 0 4px 8px rgba(255, 255, 255, 0.2);
+}
+
+/* Grid & Containers */
+.dark-mode .grid {
+    background: #282828;
+    border-radius: 8px;
+    padding: 10px;
+}
+
+/* Quote Section */
+.dark-mode .quote-section {
+    background: #333;
+    color: #fff;
+    box-shadow: 0 4px 8px rgba(255, 255, 255, 0.2);
+}
+
+/* Meme Section */
+.dark-mode .meme-section {
+    background: #333;
+    color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+}
+.dark-mode #meme-text {
+    color: #fff;
+}
+
+/* Buttons */
+.dark-mode button {
+    background: #007bff;
+    color: white;
+}
+.dark-mode button:hover {
+    background: #0056b3;
+}
+
+:root {
+    --card-bg: #ffffff;
+    --text-color: #333;
+    --btn-bg: #007bff;
+    --btn-text: #fff;
+    --btn-hover: #0056b3;
+}
+
+.dark-mode {
+    --card-bg: #2a2a2a;
+    --text-color: #ffffff;
+    --btn-bg: #444;
+    --btn-hover: #555;
+}
