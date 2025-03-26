@@ -4,19 +4,47 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Settings - NoteFlow</title>
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/settings.css">
 </head>
 <body>
 
     <header>
-        <h1>Settings</h1>
-        <a href="index.html">Back to Dashboard</a>
+        <h1>⚙️ Settings</h1>
+        <a href="index.html" class="back-link">← Back to Dashboard</a>
     </header>
 
-    <section>
-        <button id="theme-toggle">Toggle Dark Mode</button>
-    </section>
+    <div class="settings-container">
+        <h2>Preferences</h2>
 
-    <script src="assets/js/theme.js"></script>
+        <div class="setting-item">
+            <label>🌙 Dark Mode</label>
+            <div class="toggle-switch">
+                <input type="checkbox" id="theme-toggle">
+                <span class="slider"></span>
+            </div>
+        </div>
+
+        <div class="setting-item">
+            <label>🔠 Font Size</label>
+            <select id="font-size">
+                <option value="small">Small</option>
+                <option value="medium" selected>Medium</option>
+                <option value="large">Large</option>
+            </select>
+        </div>
+
+        <div class="setting-item">
+            <label>🗑 Reset Data</label>
+            <button id="reset-data" class="danger">Clear All Notes</button>
+        </div>
+
+        <div class="setting-item">
+            <label>🔑 API Key (For AI Features)</label>
+            <input type="password" id="api-key" placeholder="Enter API Key">
+            <button id="save-api-key">Save</button>
+        </div>
+    </div>
+
+    <script src="assets/js/settings.js"></script>
 </body>
 </html>

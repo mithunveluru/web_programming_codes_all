@@ -1,69 +1,73 @@
-document.addEventListener("DOMContentLoaded", () => {
-    const textarea = document.getElementById("note-input");
-    const saveBtn = document.getElementById("save-note");
-    const summarizeBtn = document.getElementById("summarize-note");
-    const savedNotes = document.getElementById("saved-notes");
-    const toggleThemeBtn = document.getElementById("toggle-theme");
+document.addEventListener("DOMContentLoaded", function () {
+    let noteInput = document.getElementById("note-input");
+    let saveBtn = document.getElementById("save-note");
+    let summarizeBtn = document.getElementById("summarize-note");
+    let savedNotes = document.getElementById("saved-notes");
 
-    // Load saved notes
-    function loadNotes() {
-        const notes = localStorage.getItem("notes") || "";
-        savedNotes.innerText = notes ? notes : "No saved notes.";
-    }
+    const GROQ_API_KEY = "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"; // Paste your key here!
 
-    // Save note
-    saveBtn.addEventListener("click", () => {
-        const note = textarea.value.trim();
-        if (!note) return;
-        localStorage.setItem("notes", note);
-        loadNotes();
-        textarea.value = "";
-    });
-
-    // Clear notes
-    document.getElementById("clear-note")?.addEventListener("click", () => {
-        localStorage.removeItem("notes");
-        savedNotes.innerText = "No saved notes.";
-    });
-
-    // Theme toggle
-    toggleThemeBtn.addEventListener("click", () => {
-        document.body.classList.toggle("dark-mode");
-        const isDark = document.body.classList.contains("dark-mode");
-        localStorage.setItem("theme", isDark ? "dark" : "light");
-        toggleThemeBtn.innerText = isDark ? "🌙" : "☀️";
-    });
-
-    // Load theme
-    function loadTheme() {
-        const savedTheme = localStorage.getItem("theme") || "light";
-        if (savedTheme === "dark") {
-            document.body.classList.add("dark-mode");
-            toggleThemeBtn.innerText = "🌙";
+    // Save note to localStorage
+    saveBtn.addEventListener("click", function () {
+        let noteText = noteInput.value.trim();
+        if (noteText) {
+            localStorage.setItem("savedNote", noteText);
+            displaySavedNote();
+            alert("Note saved!");
         } else {
-            toggleThemeBtn.innerText = "☀️";
+            alert("Write something before saving!");
+        }
+    });
+
+    // Fetch AI-powered summary using Groq API
+    summarizeBtn.addEventListener("click", async function () {
+        let noteText = noteInput.value.trim();
+        if (!noteText) {
+            alert("Write something before summarizing!");
+            return;
+        }
+
+        try {
+            let response = await fetch("https://api.groq.com/v1/chat/completions", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${GROQ_API_KEY}`
+                },
+                body: JSON.stringify({
+                    model: "mixtral-8x7b-32768",  // Or "mixtral-8x7b-32768" for better results
+                    messages: [
+                        { role: "system", content: "You are an AI that summarizes text concisely." },
+                        { role: "user", content: `Summarize this: ${noteText}` }
+                    ]
+                })
+            });
+
+            let data = await response.json();
+
+            if (data.choices && data.choices.length > 0) {
+                let summary = data.choices[0].message.content;
+                let summaryDiv = document.createElement("div");
+                summaryDiv.innerHTML = `<p><strong>Summary:</strong> ${summary}</p>`;
+                savedNotes.appendChild(summaryDiv);
+
+            } else {
+                alert("Summarization failed. Try again!");
+            }
+        } catch (error) {
+            console.error("Error:", error);
+            alert("Something went wrong! Check console for details.");
+        }
+    });
+
+    // Display saved note on load
+    function displaySavedNote() {
+        let storedNote = localStorage.getItem("savedNote");
+        if (storedNote) {
+            savedNotes.innerHTML = `<p><strong>Saved Note:</strong> ${storedNote}</p>`;
+        } else {
+            savedNotes.innerHTML = `<p>No saved notes.</p>`;
         }
     }
 
-    // AI Summarization (Mock Function)
-    async function summarizeNote() {
-        const noteText = textarea.value.trim();
-        if (!noteText) return alert("Please enter a note to summarize.");
-
-        summarizeBtn.innerText = "Summarizing...";
-        summarizeBtn.disabled = true;
-
-        // Fake AI Summary (Replace with API call)
-        setTimeout(() => {
-            savedNotes.innerText = "🔍 AI Summary: " + noteText.split(" ").slice(0, 20).join(" ") + "...";
-            summarizeBtn.innerText = "Summarize with AI";
-            summarizeBtn.disabled = false;
-        }, 2000);
-    }
-
-    summarizeBtn.addEventListener("click", summarizeNote);
-
-    // Initialize
-    loadNotes();
-    loadTheme();
+    displaySavedNote();
 });
